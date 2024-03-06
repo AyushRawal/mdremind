@@ -15,7 +15,7 @@ go install github.com/AyushRawal/mdremind
 - [ ] <title> [due:: <datetime>]
 ```
 - Add the configuration file.
-On Linux, it looks for the configration file at `$XDG_CONFIG_HOME/mdremind.jsonc` if `$XDG_CONFIG_HOME` is set, else `$HOME/.config/mdremind.jsonc`. On Windows, it looks for `%AppData%\mdremind.jsonc`. On MacOS it looks for `$HOME/Library/Application Support/mdremind.jsonc`
+On Linux, it looks for the configration file at `$XDG_CONFIG_HOME/mdremind.jsonc` if `$XDG_CONFIG_HOME` is set, else `$HOME/.config/mdremind.jsonc`. On Windows, it looks for `%AppData%\mdremind.jsonc`.
 
 - Run mdremind.
 
