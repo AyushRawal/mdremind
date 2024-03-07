@@ -57,7 +57,7 @@ func readConfig(filePath string) error {
 }
 
 func parseReminderEntries(fileContents []byte) []Reminder {
-	reg := regexp.MustCompile(`(?m)^ *- \[ \] *(?P<title>.*) \[due:: (?P<remind>.*)\].*$`)
+	reg := regexp.MustCompile(`(?m)^ *- \[ \] *(?P<title>.*) \[due:: (?P<remind>.*?)\].*$`)
 	matches := reg.FindAllSubmatch(fileContents, -1)
 	var reminders []Reminder
 	for _, m := range matches {
