@@ -13,7 +13,10 @@ go install github.com/AyushRawal/mdremind
 - Ensure your reminder entries in Markdown files follow the following format ([dataview](https://blacksmithgu.github.io/obsidian-dataview/) inline metadata format):
 ```markdown
 - [ ] <title> [due:: <datetime>]
+
 ```
+- And, the datetime is in the format: `2023-03-15T13:04`
+
 - Add the configuration file.
 On Linux, it looks for the configration file at `$XDG_CONFIG_HOME/mdremind.jsonc` if `$XDG_CONFIG_HOME` is set, else `$HOME/.config/mdremind.jsonc`. On Windows, it looks for `%AppData%\mdremind.jsonc`.
 
@@ -27,14 +30,13 @@ Sample configuration (for linux based OS):
 // mdremind.jsonc
 {
     "notes_directory_path": "${HOME}/Notes",
-    "default_reminder_time": "09:00 AM",
+    "default_reminder_time": "09:00", // 24 hour format
     "notification_cmd": "notify-send",
     "notification_cmd_arguments": [
         "-i",
         "calendar",
         "Reminder"
     ],
-    "reminder_datetime_format": "2006-01-02 3:04 PM", // go datetime format, see: `https://go.dev/src/time/format.go`
     // "timezone": "", // optional, uses system's timezone by default (except for android, see: `https://github.com/golang/go/issues/20455`)
     "ignored_directories": [ // optional
         ".git",

@@ -26,11 +26,12 @@ type Config struct {
 	DefaultReminderTimeOfDay string   `json:"default_reminder_time"`
 	NotifyCmd                string   `json:"notification_cmd"`
 	NotifyCmdArgs            []string `json:"notification_cmd_arguments,omitempty"`
-	ReminderDateTimeFormat   string   `json:"reminder_datetime_format"`
 	TimeZoneLocation         string   `json:"timezone,omitempty"`
 	IgnoredDirs              []string `json:"ignored_directories,omitempty"`
 	TimeZone                 *time.Location
 }
+
+const reminderDateTimeFormat = "2006-01-02T15:04"
 
 var (
 	config    Config
@@ -63,10 +64,10 @@ func parseReminderEntries(fileContents []byte) []Reminder {
 	for _, m := range matches {
 		title := string(m[1])
 		datetime := strings.TrimSpace(string(m[2]))
-		if len(strings.Split(datetime, " ")) == 1 {
-			datetime += " " + config.DefaultReminderTimeOfDay
+		if len(strings.Split(datetime, "T")) == 1 {
+			datetime += "T" + config.DefaultReminderTimeOfDay
 		}
-		datetimeParsed, err := time.ParseInLocation(config.ReminderDateTimeFormat, datetime, config.TimeZone)
+		datetimeParsed, err := time.ParseInLocation(reminderDateTimeFormat, datetime, config.TimeZone)
 		if err != nil {
 			log.Printf("[WARN] Invalid datetime %s: %s", datetime, err)
 			continue
@@ -128,7 +129,7 @@ func remindLoop() {
 	}
 	for range time.Tick(1 * time.Minute) {
 		for _, reminder := range reminders {
-			if reminder.Time.Format(config.ReminderDateTimeFormat) == time.Now().In(config.TimeZone).Format(config.ReminderDateTimeFormat) {
+			if reminder.Time.Format(reminderDateTimeFormat) == time.Now().In(config.TimeZone).Format(reminderDateTimeFormat) {
 				notify(reminder.Title)
 			}
 		}
